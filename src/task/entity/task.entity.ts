@@ -1,6 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Post } from 'src/posts/entity/post.entity';
+import { Profile } from 'src/profile/entity/profile.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({name: 'task'})
 export class Task {
   @PrimaryGeneratedColumn()
   id: number;
@@ -13,4 +15,12 @@ export class Task {
 
   @Column()
   isDone: boolean;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile
+
+  @OneToMany(() => Post,(post) => post.task)
+  posts: Post[]
+
 }

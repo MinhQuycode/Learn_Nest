@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param ,ParseIntPipe} from '@nestjs/common';
+import { CreateTaskPostDto } from 'src/posts/dto/post.dto';
+import { CreateTaskProfileDto } from 'src/profile/dto/profile.dto';
 import { Task } from './entity/task.entity';
 import { TaskService } from './task.service'
 
@@ -30,6 +32,16 @@ export class TaskController {
   @Delete(':id')
   deleteUser(@Param() params) {
     return this.taskService.delete(params.id);
+  }
+
+  @Post(':id/profiles')
+  createTaskProfile(@Param('id',ParseIntPipe) id:number ,@Body() createTaskProfile : CreateTaskProfileDto){
+    return this.taskService.createTaskProfile(id,createTaskProfile)
+  }
+
+  @Post(':id/posts')
+  createTaskPost(@Param('id',ParseIntPipe) id: number, @Body() createTaskPost:CreateTaskPostDto) {
+    return this.taskService.createTaskPost(id,createTaskPost)
   }
 }
 
